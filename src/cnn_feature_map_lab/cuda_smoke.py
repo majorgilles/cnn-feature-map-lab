@@ -13,5 +13,4 @@ def main() -> None:
     if info.cuda_device_name is not None:
         print(f"CUDA device name: {info.cuda_device_name}")
 
-    tensor = torch.tensor([1.0, 2.0, 3.0], device=info.device)
-    do
+    torch.tensor([1.0, 2.0, 3.0], device=info.device)
