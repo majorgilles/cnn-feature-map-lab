@@ -1,0 +1,17 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+*.egg-info/
+
+# Local datasets and checkpoints can be large.
+data/*
+!data/.gitkeep
+models/*
+!models/.gitkeep
+*.pt
+*.pth
+
+.DS_Store
+Thumbs.db
