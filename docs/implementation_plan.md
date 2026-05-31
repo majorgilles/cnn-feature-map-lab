@@ -20,6 +20,14 @@ Build a 5-day, notebook-led learning repo that makes CNN feature maps concrete t
 - Apply `MaxPool2d` and compare before/after feature maps.
 - Save outputs under `outputs/day02_conv2d_pooling/`.
 
+### Day 2.5 — Tiny synthetic orientation CNN bridge
+
+- Generate a small local grayscale dataset of simple orientation patterns.
+- Train a tiny two-convolution CNN with one final classifier layer.
+- Trace shapes through every layer before training.
+- Save sample, learned-filter, loss, and activation artifacts under `outputs/day02b_tiny_orientation_cnn/`.
+- Use this as a bridge from fixed kernels to learned feature maps before CIFAR-10.
+
 ### Day 3 — Tiny CIFAR-10 CNN
 
 - Follow the official PyTorch CIFAR-10 classifier tutorial as the backbone.

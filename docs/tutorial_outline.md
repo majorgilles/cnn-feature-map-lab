@@ -8,6 +8,10 @@ Begin with the simplest possible mental model: a kernel scans across an image an
 
 Connect the manual filter idea to PyTorch. `Conv2d` produces feature maps; `MaxPool2d` transforms feature maps by shrinking them and keeping strong responses.
 
+## 2.5. Tiny synthetic orientation CNN bridge
+
+Train a deliberately tiny CNN on locally generated grayscale orientation patterns. This bridges fixed kernels and CIFAR-10 by adding learned filters, a second convolution layer, a short training loop, and activation inspection without RGB images or a large classifier head.
+
 ## 3. Tiny CNN on CIFAR-10
 
 Use the official PyTorch CIFAR-10 tutorial as the model/data backbone. The classifier gives the CNN a reason to learn useful filters, but accuracy is only a sanity check.

@@ -83,6 +83,132 @@ Use PyTorch layers to reproduce the manual-filter idea and clearly distinguish c
 
 ---
 
+## Issue 2.5 — Bridge: Train a tiny synthetic-orientation CNN before CIFAR-10
+
+Labels: `learning`, `pytorch`, `feature-maps`, `bridge`, `day-2.5`
+
+### Goal
+
+Build a small bridge notebook between fixed manual kernels and the full CIFAR-10 classifier. Use simple synthetic grayscale images and a tiny CNN to show how learned convolution filters become a small feature hierarchy before introducing RGB images, 10 classes, and the larger CIFAR training workflow.
+
+### Official / authoritative anchors
+
+- PyTorch `torch.nn.Conv2d` docs: https://docs.pytorch.org/docs/stable/generated/torch.nn.Conv2d.html
+- PyTorch `torch.nn.MaxPool2d` docs: https://docs.pytorch.org/docs/stable/generated/torch.nn.MaxPool2d.html
+- PyTorch `torch.nn.CrossEntropyLoss` docs: https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html
+- Supplemental blueprint for simple orientation/grating stimuli: Neuromatch Tutorial 2, Convolutional Neural Networks: https://compneuro.neuromatch.io/tutorials/W1D5_DeepLearning/student/W1D5_Tutorial2.html
+- Supplemental blueprint for a simple orientation-discrimination CNN: Neuromatch Tutorial 3, orientation discrimination task: https://compneuro.neuromatch.io/tutorials/W1D5_DeepLearning/student/W1D5_Tutorial3.html
+
+### Why it matters
+
+Day 2 explains one fixed kernel and one pooled feature map. Day 3 jumps to real CIFAR-10 images, RGB channels, multiple convolution layers, fully connected layers, loss, optimizer, training loop, and checkpointing. This bridge should isolate the next mental step: a CNN can learn several simple filters from a tiny visual task, and a second convolution layer can combine first-layer feature maps into slightly richer patterns.
+
+### Proposed notebook
+
+Create `notebooks/02b_tiny_orientation_cnn.ipynb`.
+
+The notebook should sit conceptually between:
+
+```text
+Day 2: fixed kernel -> one feature map -> pooling
+Day 2.5: synthetic grayscale images -> tiny learned CNN -> inspect learned filters
+Day 3: CIFAR-10 RGB batches -> tutorial CNN -> checkpoint for later feature-map inspection
+```
+
+### Steps
+
+- Create a project-relative output directory: `outputs/day02b_tiny_orientation_cnn/`.
+- Record the exact Windows PowerShell command used to open or run the notebook, for example:
+
+  ```powershell
+  uv run jupyter lab notebooks/02b_tiny_orientation_cnn.ipynb
+  ```
+
+- Generate a tiny synthetic grayscale dataset inside the notebook, with no external downloads.
+  - Use `32 x 32` single-channel images.
+  - Use two visually simple classes, such as left-tilted vs right-tilted bars/gratings, or vertical vs horizontal stripe patterns.
+  - Add only mild variation, such as small shifts, line thickness changes, or light noise, so the task remains inspectable.
+  - Keep the generation code small, seeded, and readable.
+- Show a labeled sample grid before training.
+- Wrap the generated tensors in a simple `TensorDataset` and `DataLoader` so the learner sees the same data-loader pattern used later without CIFAR-10 complexity.
+- Define a deliberately tiny CNN with explicit keyword arguments, for example:
+
+  ```python
+  class TinyOrientationCNN(nn.Module):
+      def __init__(self) -> None:
+          super().__init__()
+          self.conv1 = nn.Conv2d(in_channels=1, out_channels=4, kernel_size=3, padding=1)
+          self.pool = nn.MaxPool2d(kernel_size=2, stride=2)
+          self.conv2 = nn.Conv2d(in_channels=4, out_channels=8, kernel_size=3, padding=1)
+          self.classifier = nn.Linear(in_features=8 * 8 * 8, out_features=2)
+
+      def forward(self, x: torch.Tensor) -> torch.Tensor:
+          x = self.pool(F.relu(self.conv1(x)))
+          x = self.pool(F.relu(self.conv2(x)))
+          x = torch.flatten(x, 1)
+          x = self.classifier(x)
+          return x
+  ```
+
+- Keep the architecture intentionally smaller than the CIFAR tutorial:
+  - one input channel instead of three RGB channels
+  - two classes instead of ten
+  - two small convolution layers, but only one final linear classifier
+  - no extra `fc1 -> fc2 -> fc3` classifier head
+  - no checkpoint requirement unless it feels useful later
+- Add shape-tracing cells that print and explain the expected path:
+
+  ```text
+  input:      [batch, 1, 32, 32]
+  conv1:      [batch, 4, 32, 32]
+  pool1:      [batch, 4, 16, 16]
+  conv2:      [batch, 8, 16, 16]
+  pool2:      [batch, 8, 8, 8]
+  flatten:    [batch, 512]
+  classifier: [batch, 2]
+  ```
+
+- Train for a short run using `CrossEntropyLoss` and a simple optimizer such as SGD or Adam.
+- Treat accuracy as a sanity check only; the real learning goal is whether the filters and activations become interpretable.
+- Save at least these artifacts under `outputs/day02b_tiny_orientation_cnn/`:
+  - a synthetic sample grid
+  - a training loss curve or small loss table
+  - a learned `conv1` filter grid
+  - at least one activation grid from `conv1` or `conv2`
+- Add a reflection section answering:
+  - Which part felt like Day 2 fixed kernels?
+  - Which part starts to feel like Day 3 CNN training?
+  - What did the second convolution layer add conceptually?
+
+### Human-in-the-loop checkpoint
+
+- [ ] I inspected the synthetic examples before training.
+- [ ] I traced the tensor shapes through every layer.
+- [ ] I confirmed that training ran and used accuracy only as a sanity check.
+- [ ] I inspected the learned filters or activation maps myself.
+- [ ] I wrote why this bridge makes the CIFAR-10 notebook feel less abrupt.
+
+### Acceptance criteria
+
+- [ ] `notebooks/02b_tiny_orientation_cnn.ipynb` exists and runs from a fresh `uv sync` environment.
+- [ ] The notebook cites the PyTorch docs for `Conv2d`, `MaxPool2d`, and `CrossEntropyLoss`.
+- [ ] The notebook clearly labels the Neuromatch orientation/grating material as supplemental inspiration, not a replacement for this repo's learning path.
+- [ ] The synthetic dataset is generated locally in the notebook with no external dataset download.
+- [ ] The CNN uses a tiny grayscale, two-class architecture with no more than two convolution layers and one final linear classifier.
+- [ ] Tensor shapes are printed and explained through the forward path.
+- [ ] A short training run completes successfully.
+- [ ] At least one learned-filter grid or activation grid is saved under `outputs/day02b_tiny_orientation_cnn/`.
+- [ ] The notebook explicitly explains that this is a bridge from fixed kernels to learned feature maps, not a classifier-focused detour.
+
+### Non-goals
+
+- Do not introduce CIFAR-10 in this bridge notebook.
+- Do not add a pretrained model.
+- Do not use a large classifier head or more than two convolution layers.
+- Do not optimize for high benchmark accuracy.
+
+---
+
 ## Issue 3 — Day 3: Train a tiny CIFAR-10 CNN as a feature-map learning vehicle
 
 Labels: `learning`, `pytorch`, `cifar-10`, `day-3`
