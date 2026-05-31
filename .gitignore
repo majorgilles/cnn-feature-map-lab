@@ -8,6 +8,7 @@ __pycache__/
 
 # Local datasets and checkpoints can be large.
 data/*
+!data/**/*.jpg
 !data/.gitkeep
 models/*
 !models/.gitkeep
