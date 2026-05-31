@@ -156,17 +156,24 @@ Day 3: CIFAR-10 RGB batches -> tutorial CNN -> checkpoint for later feature-map 
   - two small convolution layers, but only one final linear classifier
   - no extra `fc1 -> fc2 -> fc3` classifier head
   - no checkpoint requirement unless it feels useful later
-- Add shape-tracing cells that print and explain the expected path:
+- Add a dedicated section titled `## Trace shapes through the tiny CNN`, modeled after the step-by-step shape walk-through in `notebooks/03_tiny_cifar10_cnn.ipynb`.
+  - Use separate markdown + code cells for each explicit transformation, not one long combined cell.
+  - Include at least: input batch, `conv1`, `relu1`, `pool1`, `conv2`, `relu2`, `pool2`, `flatten`, and `classifier`.
+  - Each markdown cell should say what changes at that step: channels, height/width, values-only ReLU, or vector length.
+  - Each code cell should update `x` once and print `x.shape`.
+  - Expected path:
 
-  ```text
-  input:      [batch, 1, 32, 32]
-  conv1:      [batch, 4, 32, 32]
-  pool1:      [batch, 4, 16, 16]
-  conv2:      [batch, 8, 16, 16]
-  pool2:      [batch, 8, 8, 8]
-  flatten:    [batch, 512]
-  classifier: [batch, 2]
-  ```
+    ```text
+    input:      [batch, 1, 32, 32]
+    conv1:      [batch, 4, 32, 32]
+    relu1:      [batch, 4, 32, 32]
+    pool1:      [batch, 4, 16, 16]
+    conv2:      [batch, 8, 16, 16]
+    relu2:      [batch, 8, 16, 16]
+    pool2:      [batch, 8, 8, 8]
+    flatten:    [batch, 512]
+    classifier: [batch, 2]
+    ```
 
 - Train for a short run using `CrossEntropyLoss` and a simple optimizer such as SGD or Adam.
 - Treat accuracy as a sanity check only; the real learning goal is whether the filters and activations become interpretable.
@@ -183,7 +190,7 @@ Day 3: CIFAR-10 RGB batches -> tutorial CNN -> checkpoint for later feature-map 
 ### Human-in-the-loop checkpoint
 
 - [ ] I inspected the synthetic examples before training.
-- [ ] I traced the tensor shapes through every layer.
+- [ ] I stepped through the dedicated shape-tracing section cell by cell.
 - [ ] I confirmed that training ran and used accuracy only as a sanity check.
 - [ ] I inspected the learned filters or activation maps myself.
 - [ ] I wrote why this bridge makes the CIFAR-10 notebook feel less abrupt.
@@ -195,6 +202,7 @@ Day 3: CIFAR-10 RGB batches -> tutorial CNN -> checkpoint for later feature-map 
 - [ ] The notebook clearly labels the Neuromatch orientation/grating material as supplemental inspiration, not a replacement for this repo's learning path.
 - [ ] The synthetic dataset is generated locally in the notebook with no external dataset download.
 - [ ] The CNN uses a tiny grayscale, two-class architecture with no more than two convolution layers and one final linear classifier.
+- [ ] The notebook has a dedicated `## Trace shapes through the tiny CNN` section with separate markdown/code cells for each shape transformation.
 - [ ] Tensor shapes are printed and explained through the forward path.
 - [ ] A short training run completes successfully.
 - [ ] At least one learned-filter grid or activation grid is saved under `outputs/day02b_tiny_orientation_cnn/`.
