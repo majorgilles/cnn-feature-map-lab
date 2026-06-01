@@ -16,6 +16,8 @@ Train a deliberately tiny CNN on locally generated grayscale orientation pattern
 
 Use the official PyTorch CIFAR-10 tutorial as the model/data backbone. The classifier gives the CNN a reason to learn useful filters, but accuracy is only a sanity check.
 
+Set expectations clearly: CIFAR-10 images are only 32 by 32 pixels, and the tutorial model has just two convolution layers with 6 then 16 feature maps. Low-to-modest accuracy should be read as a combined effect of limited image detail, tiny model capacity, and a short training recipe, not as the main success metric.
+
 ## 4. Activation inspection
 
 Look inside the tiny CNN. Compare feature maps from early and later layers, and write short observations about what changes with depth.

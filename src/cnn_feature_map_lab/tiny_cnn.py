@@ -15,7 +15,9 @@ class TinyCifar10Cnn(nn.Module):
 
     The model is intentionally tiny because classification is only a vehicle for this lab. The
     real learning target is to create convolution filters and feature maps that are small enough to
-    inspect visually.
+    inspect visually. Modest CIFAR-10 accuracy is expected: the images are only 32 by 32 pixels, the
+    model has very little capacity compared with modern CNNs, and the training run is deliberately
+    short.
 
     Convolution layers:
         ``conv1`` accepts RGB images with 3 input channels and creates 6 feature maps using 5 by 5

@@ -4,6 +4,10 @@ A 5-day, learning-first PyTorch lab for understanding image convolutional networ
 
 This repo is intentionally small and visual. The goal is not to chase classifier accuracy; the goal is to understand how pixels become channels, how filters produce feature maps, how pooling changes those maps, and how a tiny CNN compares with a real pretrained vision model.
 
+## Model scale and accuracy expectations
+
+Day 3 uses the intentionally tiny CNN from the official PyTorch CIFAR-10 tutorial: two convolution layers that create 6 then 16 feature maps, followed by a small fully connected classifier. CIFAR-10 images are only 32 by 32 pixels, so many objects are represented by coarse shapes rather than fine details. Modest accuracy is expected here because image resolution, tiny model capacity, and a short tutorial-style training run all limit classification performance. That is acceptable for this lab: accuracy is a sanity check, while the learning target is inspectable filters and feature maps.
+
 ## Learning outcome
 
 By the end, you should be able to:

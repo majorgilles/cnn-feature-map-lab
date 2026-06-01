@@ -33,6 +33,7 @@ Build a 5-day, notebook-led learning repo that makes CNN feature maps concrete t
 - Follow the official PyTorch CIFAR-10 classifier tutorial as the backbone.
 - Keep the model and training run small.
 - Treat accuracy as a sanity check, not the learning goal.
+- Document that modest accuracy is expected because CIFAR-10 has 32 by 32 images, the model has only two convolution layers, and the training recipe is intentionally short.
 - Save a checkpoint under `models/`.
 
 ### Day 4 — Inspect tiny CNN activations
