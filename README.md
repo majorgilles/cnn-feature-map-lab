@@ -70,6 +70,34 @@ cnn-feature-map-lab/
 4. `notebooks/04_feature_map_inspection.ipynb` — inspect activations from the tiny CNN.
 5. `notebooks/05_pretrained_comparison.ipynb` — compare toy activations with a pretrained torchvision model.
 
+## Final output gallery
+
+| Concept | Evidence |
+| --- | --- |
+| Manual filter grids | <img src="outputs/day01_manual_filters/keyboard_manual_filter_grid.png" alt="Manual edge, blur, and sharpen filter grid" width="520"> |
+| `Conv2d` feature maps | <img src="outputs/day02_conv2d_pooling/conv2d_feature_map_grid.png" alt="PyTorch Conv2d feature-map grid" width="520"> |
+| Pooling before/after | <img src="outputs/day02_conv2d_pooling/pooling_before_after.png" alt="MaxPool2d before and after comparison" width="520"> |
+| Tiny CNN activations | <img src="outputs/day04_tiny_cnn_activations/conv1_feature_maps.png" alt="Tiny CNN conv1 activation grid" width="520"><br><img src="outputs/day04_tiny_cnn_activations/conv2_feature_maps.png" alt="Tiny CNN conv2 activation grid" width="520"> |
+| Pretrained ResNet activations | <img src="outputs/day05_pretrained_comparison/early_conv_selected_feature_maps.png" alt="Pretrained ResNet early convolution activation grid" width="520"><br><img src="outputs/day05_pretrained_comparison/layer2_selected_feature_maps.png" alt="Pretrained ResNet layer2 activation grid" width="520"> |
+
+## Final feature-map explanation
+
+A feature map is the output of a filter or convolution layer after it scans across an image. Each location in the feature map stores how strongly the filter responded to that part of the image. In the manual filter step, fixed kernels made this visible by highlighting edges, blur, or sharpened details. In PyTorch `Conv2d`, the same idea becomes learnable: the model learns filters that produce useful feature maps for the task. Pooling does not create new learned filters; it transforms existing feature maps by shrinking their spatial size and keeping strong responses. In the tiny CNN, early feature maps were easier to relate to visible edges or contrast, while later maps became smaller and harder to name. In the pretrained ResNet, early channels responded to colors and edges, while deeper channels sometimes looked more like key-like regions or composed local patterns. This showed that larger CNNs use the same basic feature-map idea, but with many more channels and more depth. The tiny CNN was useful for learning the mechanics, while the pretrained model showed how the idea scales.
+
+## Commands used
+
+Run these commands in Windows PowerShell:
+
+```powershell
+cd $HOME\dev\cnn-feature-map-lab
+uv sync
+uv run python -m cnn_feature_map_lab.cuda_smoke
+uv run jupyter lab notebooks
+uv run ruff check .
+uv run ruff format --check .
+uv run pytest
+```
+
 ## Done evidence
 
 The project is done when `outputs/` contains a small gallery with:
@@ -80,6 +108,8 @@ The project is done when `outputs/` contains a small gallery with:
 - tiny CNN activations;
 - pretrained CNN activations;
 - a short final note in your own words explaining feature maps.
+
+The final gallery and explanation above represent each of those items.
 
 ## Quality checks
 
