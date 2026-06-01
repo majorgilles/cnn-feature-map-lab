@@ -343,7 +343,7 @@ Labels: `learning`, `documentation`, `feature-maps`, `final-note`
 
 ### Goal
 
-Collect the learning evidence and write the final explanation in your own words.
+Collect the learning evidence and create a final explanation that is AI-summarized from the learner's inspection and discussion.
 
 ### Official / authoritative anchors
 
@@ -367,7 +367,7 @@ The strongest proof of understanding is not a green notebook run. It is being ab
 ### Human-in-the-loop checkpoint
 
 - [ ] I inspected the final gallery myself.
-- [ ] I wrote the feature-map explanation in my own words.
+- [ ] I reviewed the AI-summarized feature-map explanation against the gallery and my learning notes.
 - [ ] I decided whether to proceed, rerun, ask for help, or open a follow-up issue.
 
 ### Acceptance criteria

@@ -52,4 +52,4 @@ Build a 5-day, notebook-led learning repo that makes CNN feature maps concrete t
 
 ## Validation
 
-Done means the repo contains an output gallery with manual filters, `Conv2d` feature maps, pooling comparisons, tiny CNN activations, pretrained CNN activations, and a short learner-authored explanation.
+Done means the repo contains an output gallery with manual filters, `Conv2d` feature maps, pooling comparisons, tiny CNN activations, pretrained CNN activations, and a short AI-summarized explanation based on learner inspection and discussion.

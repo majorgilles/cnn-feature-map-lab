@@ -4,6 +4,10 @@ A 5-day, learning-first PyTorch lab for understanding image convolutional networ
 
 This repo is intentionally small and visual. The goal is not to chase classifier accuracy; the goal is to understand how pixels become channels, how filters produce feature maps, how pooling changes those maps, and how a tiny CNN compares with a real pretrained vision model.
 
+## Learning, authorship, and AI assistance
+
+This project was AI-assisted as a learning tool. AI support was used to explore questions and ideas, organize the learning path, and suggest code and notes while studying CNN filters and feature maps. The code was hand-written as part of the learning process, based on AI suggestions, with the exception of some `matplotlib.pyplot` graphing code used to generate visualizations. The written explanations in this repo are AI-summarized from my prompts, inspection, and learning process; they are not presented as my unaided wording. The inspiration, direction, and curiosity behind the project are mine, and this repo is a vehicle for gaining knowledge about feature maps through inspection and experimentation.
+
 ## Model scale and accuracy expectations
 
 Day 3 uses the intentionally tiny CNN from the official PyTorch CIFAR-10 tutorial: two convolution layers that create 6 then 16 feature maps, followed by a small fully connected classifier. CIFAR-10 images are only 32 by 32 pixels, so many objects are represented by coarse shapes rather than fine details. Modest accuracy is expected here because image resolution, tiny model capacity, and a short tutorial-style training run all limit classification performance. That is acceptable for this lab: accuracy is a sanity check, while the learning target is inspectable filters and feature maps.
@@ -82,6 +86,8 @@ cnn-feature-map-lab/
 
 ## Final feature-map explanation
 
+The paragraph below is AI-summarized from the project outputs and learning discussion; it is not claimed as unaided wording.
+
 A feature map is the output of a filter or convolution layer after it scans across an image. Each location in the feature map stores how strongly the filter responded to that part of the image. In the manual filter step, fixed kernels made this visible by highlighting edges, blur, or sharpened details. In PyTorch `Conv2d`, the same idea becomes learnable: the model learns filters that produce useful feature maps for the task. Pooling does not create new learned filters; it transforms existing feature maps by shrinking their spatial size and keeping strong responses. In the tiny CNN, early feature maps were easier to relate to visible edges or contrast, while later maps became smaller and harder to name. In the pretrained ResNet, early channels responded to colors and edges, while deeper channels sometimes looked more like key-like regions or composed local patterns. This showed that larger CNNs use the same basic feature-map idea, but with many more channels and more depth. The tiny CNN was useful for learning the mechanics, while the pretrained model showed how the idea scales.
 
 ## Commands used
@@ -107,7 +113,7 @@ The project is done when `outputs/` contains a small gallery with:
 - pooling before/after comparisons;
 - tiny CNN activations;
 - pretrained CNN activations;
-- a short final note in your own words explaining feature maps.
+- a short AI-summarized final note explaining feature maps, based on learner inspection and discussion.
 
 The final gallery and explanation above represent each of those items.
 
